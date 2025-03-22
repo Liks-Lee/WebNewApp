@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row justify-content-center"> <!-- Центрирование строки -->
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h1 class="card-title">{{ post.title }}</h1>
+                        <div>
+                            Опубликовано {{ post.date.strftime('%d.%m.%Y') }}.
+                            Автор: {{ post.author }}
+                        </div>
+                        <img class="card-img-top" src="{{ url_for('static', filename='images/' + post.image_id) }}" alt="Card image cap">
+                        <p class="card-text">{{ post.text }}</p>
+                    </div>
+                </div>
+
+                <!-- Форма для комментариев -->
+                <div class="mb-4">
+                    <h3>Оставьте комментарий</h3>
+                    <form method="POST" action="#">
+                        <div class="form-group">
+                            <textarea class="form-control" name="comment" rows="4" placeholder="Ваш комментарий..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Отправить</button>
+                    </form>
+                </div>
+
+                <!-- Комментарии -->
+                <div class="mb-4">
+                    <h3>Комментарии</h3>
+                    {% for comment in post.comments %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ comment.author }}</h5>
+                                <p class="card-text">{{ comment.text }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Ответы на комментарии -->
+                        {% if comment.replies %}
+                            <div class="ms-4">
+                                {% for reply in comment.replies %}
+                                    <div class="card mb-2">
+                                        <div class="card-body">
+                                            <h6 class="card-title">{{ reply.author }}</h6>
+                                            <p class="card-text">{{ reply.text }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
