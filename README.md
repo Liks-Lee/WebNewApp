@@ -1,5 +1,5 @@
 # WebNewApp
-* cd C:\WebDev\labor1\WebNewApp
+* cd C:\WebDev\WebNewApp
 * python -m venv ve
 * ve\Scripts\activate
 * pip install Flask
